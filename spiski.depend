@@ -1,0 +1,5 @@
+# depslib dependency file v1.0
+1490950100 source:d:\cppprojects\spiski\main.cpp
+	<stdio.h>
+	<stdlib.h>
+

@@ -56,11 +56,15 @@ Node* getLast(Node *head)
 
 void pushBack(Node *head, int value)
 {
-    Node *last = getLast(head);
-    Node *tmp = (Node*) malloc(sizeof(Node));
-    tmp->value = value;
-    tmp->next = NULL;
-    last->next = tmp;
+    if (head == NULL) printf("\n--List is empty, enter at least one item with push--\n");
+    else
+    {
+        Node *last = getLast(head);
+        Node *tmp = (Node*) malloc(sizeof(Node));
+        tmp->value = value;
+        tmp->next = NULL;
+        last->next = tmp;
+    }
 }
 
 Node* getLastButOne(Node* head)
@@ -110,41 +114,49 @@ int popBack(Node **head)
 
 void insert(Node *head, unsigned n, int val)
 {
-    unsigned i = 0;
-    Node *tmp = NULL;
-    while (i < n && head->next)
-    {
-        head = head->next;
-        ++i;
-    }
-    tmp = (Node*) malloc(sizeof(Node));
-    tmp->value =val;
-    if (head->next)
-    {
-        tmp->next = head->next;
-    }
+    if (head == NULL) printf("\n--List is empty, enter at least one item with push--\n");
     else
     {
-        tmp->next = NULL;
+        unsigned i = 0;
+        Node *tmp = NULL;
+        while (i < n && head->next)
+        {
+            head = head->next;
+            ++i;
+        }
+        tmp = (Node*) malloc(sizeof(Node));
+        tmp->value =val;
+        if (head->next)
+        {
+            tmp->next = head->next;
+        }
+        else
+        {
+            tmp->next = NULL;
+        }
+        head->next = tmp;
     }
-    head->next = tmp;
 }
 
 int deleteNth(Node **head, int n)
 {
-    if (n == 0)
-    {
-        return pop(head);
-    }
+    if (head == NULL) printf("\n--List is empty, enter at least one item with push--\n");
     else
     {
-        Node *prev = getNth(*head, n-1);
-        Node *elm  = prev->next;
-        int val = elm->value;
+        if (n == 0)
+        {
+            return pop(head);
+        }
+        else
+        {
+            Node *prev = getNth(*head, n-1);
+            Node *elm  = prev->next;
+            int val = elm->value;
 
-        prev->next = elm->next;
-        free(elm);
-        return val;
+            prev->next = elm->next;
+            free(elm);
+            return val;
+        }
     }
 }
 
@@ -160,31 +172,38 @@ void deleteList(Node **head)
 
 void printLinkedList(const Node *head)
 {
-
-    while (head)
+    if (head == NULL) printf("\n--List is empty, enter at least one item with push--\n");
+    else
     {
-        printf("%d ", head->value);
-        head = head->next;
+        while (head)
+        {
+            printf("%d ", head->value);
+            head = head->next;
+        }
+        printf("\n");
     }
-    printf("\n");
 }
 
 Node* myFunction(Node* head, int A, int B)
 {
-    int i = 0;
-    Node *tmp = NULL;
-    while (i < A && head->next)
+    if (head == NULL) printf("\n--List is empty, enter at least one item with push--\n");
+    else
     {
-        head = head->next;
-        ++i;
+        int i = 0;
+        Node *tmp = NULL;
+        while (i < A && head->next)
+        {
+            head = head->next;
+            ++i;
+        }
+        while ( i <= B && head->next)
+        {
+            push(&tmp, head->value);
+            head = head->next;
+            ++i;
+        }
+        return tmp;
     }
-    while ( i < B && head->next)
-    {
-        pushBack(head, head->value);
-        head = head->next;
-        ++i;
-    }
-    return tmp;
 }
 
 void title ()
@@ -209,7 +228,7 @@ void title ()
 int main()
 {
     Node* point = NULL;
-    int value = 0;
+    int value;
     char boolean;
     unsigned operation, number = 0;
 
@@ -217,7 +236,7 @@ int main()
     scanf("%c",&boolean);
     if (boolean == 'N')
     {
-        printf("");
+        printf("You did not want to create a list, so not one function will not work ");
         return 0;
     }
     else
@@ -240,7 +259,7 @@ int main()
                 }
             case 1:
                 printf("please enter added element - ");
-                scanf("%d",value);
+                scanf("%d",&value);
                 push(&head,value);
                 break;
             case 2:
@@ -249,7 +268,7 @@ int main()
                 break;
             case 3:
                 printf("please enter number cell for which you need a pointer - ");
-                scanf("%d",number);
+                scanf("%d",&number);
                 point = getNth(head,number);
                 break;
             case 4:
@@ -260,10 +279,10 @@ int main()
                 break;
             case 6:
                 printf("please enter added element - ");
-                scanf("%d",value);
+                scanf("%d",&value);
                 printf("\n");
-                printf("please enter  ");
-                scanf("%d",number);
+                printf("please enter On which position to insert - ");
+                scanf("%d",&number);
                 insert(head,number,value);
                 break;
             case 7:
@@ -271,7 +290,7 @@ int main()
                 break;
             case 8:
                 printf("please enter number of element which you want to delete - ");
-                scanf("%d",number);
+                scanf("%d",&number);
                 deleteNth(&head,number);
                 break;
             case 9:
@@ -279,7 +298,7 @@ int main()
                 break;
             case 10:
                 printf("please enter added element - ");
-                scanf("%d",value);
+                scanf("%d",&value);
                 pushBack(head,value);
                 break;
             case 11:
@@ -291,7 +310,7 @@ int main()
                 printf("please enter ");
                 scanf("%d %d",&A,&B);
                 point = myFunction(head,A,B);
-                printf ("\nif you please enter Y or N ");
+                printf ("\nif you want to use the resulting list Y or N? ");
                 scanf("%c",&C);
                 if (C == 'Y')
                 {
@@ -308,7 +327,7 @@ int main()
                 return 1;
             default: printf("\n --incorrect operand-- \n");
             }
-        system("pause");
+        system("\n pause");
         }
     }
 }
